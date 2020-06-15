@@ -1,0 +1,33 @@
+
+ssh hawkbot@192.168.1.54
+
+roscore
+
+roslaunch hawkbot bringup.launch
+
+roslaunch astra_camera stereo_s.launch
+
+rosrun nnca_cluster nnca_cluster
+
+roslaunch nnca_cluster setup_tf.launch
+
+roslaunch pointcloud_to_laserscan  pointcloud_to_laserscan.launch
+
+roslaunch ira_laser_tools laserscan_multi_merger.launch 
+
+roslaunch imu_complementary_filter complementary_filter1.launch
+roslaunch imu_complementary_filter complementary_filter2.launch
+
+roslaunch imu_complementary_filter ekf_imu1.launch
+roslaunch imu_complementary_filter ekf_imu2.launch
+
+rosrun depthimage_to_laserscan depthimage_to_laserscan image:=/camera/depth/image_raw 
+
+rosrun rviz rviz
+
+
+ls -l /dev/ttyUSB*
+sudo chmod 777 /dev/ttyUSB0
+
+laser_link
+roslaunch value_lidar_driver value_driver.launch
